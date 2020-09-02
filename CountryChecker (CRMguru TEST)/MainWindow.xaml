@@ -1,0 +1,66 @@
+﻿<Window x:Class="CountryChecker__CRMguru_TEST_.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CountryChecker__CRMguru_TEST_"
+        mc:Ignorable="d"
+        Title="Country Checker" Height="289" Width="611" WindowStyle="None" MouseLeftButtonDown="Win_MouseLeftButtonDown" BorderThickness="2,2,2,2" BorderBrush="Black" ScrollViewer.VerticalScrollBarVisibility="Disabled" ResizeMode="NoResize">
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <LinearGradientBrush.RelativeTransform>
+                <TransformGroup>
+                    <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                    <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                    <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </LinearGradientBrush.RelativeTransform>
+            <GradientStop Color="#FFA8D3EC" Offset="1"/>
+            <GradientStop Color="White" Offset="0"/>
+        </LinearGradientBrush>
+    </Window.Background>
+    <Grid>
+        <TabControl Height="269" VerticalAlignment="Center" HorizontalContentAlignment="Center">
+            <TabItem x:Name="CItab" Header="County Info" BorderBrush="{x:Null}" Background="#FFA8D0E6" IsTabStop="False">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="CC_Button" Content="Check Country" HorizontalAlignment="Left" Margin="197,10,0,0" VerticalAlignment="Top" Height="24" Width="96" Background="#FFD6EAF1" BorderBrush="#FFB4B4B4" IsTabStop="False" Click="CC_Button_Click" IsEnabled="False"/>
+                    <TextBox x:Name="CountryBox" HorizontalAlignment="Left" Margin="10,10,0,0" Text="Enter Country Name..." TextWrapping="Wrap" VerticalAlignment="Top" Width="182" UndoLimit="20" Cursor="IBeam" Height="24" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" MouseEnter="CountryBox_MouseEnter" MouseLeave="CountryBox_MouseLeave" IsTabStop="False" TextChanged="CountryBox_TextChanged">
+                        <TextBox.Foreground>
+                            <SolidColorBrush Color="LightGray"/>
+                        </TextBox.Foreground>
+                    </TextBox>
+                    <Label Content="Name:" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Region:" HorizontalAlignment="Left" Margin="10,81,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Capital:" HorizontalAlignment="Left" Margin="10,112,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Code:" HorizontalAlignment="Left" Margin="10,143,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Area:" HorizontalAlignment="Left" Margin="10,174,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Population:" HorizontalAlignment="Left" Margin="10,205,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="NameL" Content="-" HorizontalAlignment="Left" Margin="101,50,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="RegionL" Content="-" HorizontalAlignment="Left" Margin="101,81,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="CapitalL" Content="-" HorizontalAlignment="Left" Margin="101,112,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="CodeL" Content="-" HorizontalAlignment="Left" Margin="101,143,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="AreaL" Content="-" HorizontalAlignment="Left" Margin="101,174,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="PopulationL" Content="-" HorizontalAlignment="Left" Margin="101,205,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="StatusL" Content="Waiting for data..." HorizontalAlignment="Left" Margin="298,205,0,0" VerticalAlignment="Top" Width="293" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Foreground="#FF3AB8E8"/>
+                    <Button x:Name="SC_Button" Content="Save Country" HorizontalAlignment="Left" Margin="298,10,0,0" VerticalAlignment="Top" Height="24" Width="80" Background="#FFDDF1D6" BorderBrush="#FFB4B4B4" IsTabStop="False" Click="SC_Button_Click" IsEnabled="False"/>
+                    <Label x:Name="UnacceptedSLabel" Content="" HorizontalAlignment="Left" Margin="383,10,0,0" VerticalAlignment="Top" Height="24" Width="194"/>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="DBtab" Header="DataBase" Background="#FFA8D0E6" IsTabStop="False" BorderBrush="{x:Null}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <DataGrid x:Name="MDataGrid" Margin="0,39,0,0"/>
+                    <Button x:Name="UpdateButton" Content="Update Table" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="24" Width="80" Background="#FFD6EAF1" BorderBrush="#FFB4B4B4" IsTabStop="False" Click="UpdateButton_Click"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <Button x:Name="X_Button" Content="X" HorizontalAlignment="Right" Margin="0,1,2,0" VerticalAlignment="Top" Background="#FFFB8F8F" Width="20" Height="20" FontFamily="Arial Black" FontStyle="Italic" Foreground="#FF6C6C6C" Click="X_Button_Click"/>
+        <Button x:Name="Min_Button" Content="--" HorizontalAlignment="Right" Margin="0,1,24,0" VerticalAlignment="Top" Background="#FF8FC5FB" Width="20" Height="20" FontFamily="Arial Black" FontStyle="Italic" Foreground="#FF6C6C6C" Click="Min_Click"/>
+    </Grid>
+</Window>
