@@ -11,10 +11,10 @@ namespace CountryChecker__CRMguru_TEST_
         private static SqlCommand CMD;
         private static string SQLTask;
         //----Connect to DataBase----
-        public static void Connetion()
+        public static void Connetion(string CONcfg)
         {
-            string DBcon = Directory.GetCurrentDirectory().Substring(0, Directory.GetCurrentDirectory().Length - 23) + "CountrySummaryDataBase.mdf";
-            string constr = String.Format($@"Data Source=(localdb)\MSSQLLocalDB;AttachDBFilename={DBcon};Integrated Security=True");
+            //string CONcfg = Directory.GetCurrentDirectory().Substring(0, Directory.GetCurrentDirectory().Length - 23) + "CountrySummaryDataBase.mdf";
+            string constr = String.Format($@"Data Source=(localdb)\MSSQLLocalDB;AttachDBFilename={CONcfg};Integrated Security=True");
             CON = new SqlConnection(constr);
             CON.Open();
         }
@@ -51,50 +51,14 @@ namespace CountryChecker__CRMguru_TEST_
             try
             {
                 int TCCapital = 0, TCRegion = 0;
-                SqlDataReader Reader;
                 DataTable TempT = new DataTable();
 
-                SQLTask = $@"SELECT [nID], [sName] FROM [dbo].[t_dicCapital] WHERE [sName] = '{CCapital}'";
-                SqlDataAdapter Adapter = new SqlDataAdapter(SQLTask, CON);
-                Adapter.Fill(TempT);
-                if (TempT.Rows.Count == 0)
-                {
-                    SQLTask = $@"INSERT INTO [dbo].[t_dicCapital]([sName]) VALUES('{CCapital}')";
-                    CMD = new SqlCommand(SQLTask, CON);
-                    CMD.ExecuteNonQuery();
-                }
-                SQLTask = $@"SELECT [nID] FROM [dbo].[t_dicCapital] WHERE [sName] = '{CCapital}'";
-                CMD = new SqlCommand(SQLTask, CON);
-                Reader = CMD.ExecuteReader();
-                while (Reader.Read())
-                {
-                    TCCapital = Reader.GetInt32(0);
-                }
-                Reader.Close();
-                TempT = null;
+                TCCapital = CheckCapital(CCapital);
 
-                SQLTask = $@"SELECT [nID], [sName] FROM [dbo].[t_dicRegion] WHERE [sName] = '{CRegion}'";
-                Adapter = new SqlDataAdapter(SQLTask, CON);
-                TempT = new DataTable();
-                Adapter.Fill(TempT);
-                if (TempT.Rows.Count == 0)
-                {
-                    SQLTask = $@"INSERT INTO [dbo].[t_dicRegion]([sName]) VALUES('{CRegion}')";
-                    CMD = new SqlCommand(SQLTask, CON);
-                    CMD.ExecuteNonQuery();
-                }
-                SQLTask = $@"SELECT [nID] FROM [dbo].[t_dicRegion] WHERE [sName] = '{CRegion}'";
-                CMD = new SqlCommand(SQLTask, CON);
-                Reader = CMD.ExecuteReader();
-                while (Reader.Read())
-                {
-                    TCRegion = Reader.GetInt32(0);
-                }
-                Reader.Close();
-                TempT = null;
+                TCRegion = CheckRegion(CRegion);
 
                 SQLTask = $@"SELECT [sName] FROM [dbo].[t_dicCountries] WHERE sName = '{CName}'";
-                Adapter = new SqlDataAdapter(SQLTask, CON);
+                SqlDataAdapter Adapter = new SqlDataAdapter(SQLTask, CON);
                 TempT = new DataTable();
                 Adapter.Fill(TempT);
                 if (TempT.Rows.Count == 0)
@@ -111,6 +75,62 @@ namespace CountryChecker__CRMguru_TEST_
                 }
             }
             catch { }
+        }
+        public static Int32 CheckCapital(string Capital)
+        {
+            int TCCapital = 0;
+            SqlDataReader Reader;
+            DataTable TempT = new DataTable();
+
+            SQLTask = $@"SELECT [nID], [sName] FROM [dbo].[t_dicCapital] WHERE [sName] = '{Capital}'";
+            SqlDataAdapter Adapter = new SqlDataAdapter(SQLTask, CON);
+            Adapter.Fill(TempT);
+            if (TempT.Rows.Count == 0)
+            {
+                SQLTask = $@"INSERT INTO [dbo].[t_dicCapital]([sName]) VALUES('{Capital}')";
+                CMD = new SqlCommand(SQLTask, CON);
+                CMD.ExecuteNonQuery();
+            }
+            SQLTask = $@"SELECT [nID] FROM [dbo].[t_dicCapital] WHERE [sName] = '{Capital}'";
+            CMD = new SqlCommand(SQLTask, CON);
+            Reader = CMD.ExecuteReader();
+            while (Reader.Read())
+            {
+                TCCapital = Reader.GetInt32(0);
+            }
+            Reader.Close();
+            TempT = null;
+
+            return TCCapital;
+        }
+
+        public static Int32 CheckRegion(string Region)
+        {
+            int TCRegion = 0;
+            SqlDataReader Reader;
+            DataTable TempT = new DataTable();
+
+            SQLTask = $@"SELECT [nID], [sName] FROM [dbo].[t_dicRegion] WHERE [sName] = '{Region}'";
+            SqlDataAdapter Adapter = new SqlDataAdapter(SQLTask, CON);
+            TempT = new DataTable();
+            Adapter.Fill(TempT);
+            if (TempT.Rows.Count == 0)
+            {
+                SQLTask = $@"INSERT INTO [dbo].[t_dicRegion]([sName]) VALUES('{Region}')";
+                CMD = new SqlCommand(SQLTask, CON);
+                CMD.ExecuteNonQuery();
+            }
+            SQLTask = $@"SELECT [nID] FROM [dbo].[t_dicRegion] WHERE [sName] = '{Region}'";
+            CMD = new SqlCommand(SQLTask, CON);
+            Reader = CMD.ExecuteReader();
+            while (Reader.Read())
+            {
+                TCRegion = Reader.GetInt32(0);
+            }
+            Reader.Close();
+            TempT = null;
+
+            return TCRegion;
         }
     }
 }
