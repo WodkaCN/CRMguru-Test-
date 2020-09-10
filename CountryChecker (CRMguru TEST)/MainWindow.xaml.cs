@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -8,11 +9,24 @@ namespace CountryChecker__CRMguru_TEST_
 {
     public partial class MainWindow : Window
     {
+        private int x = 0, y = 0, z = 0;
         private DataTable DT;
         private string[] Data = new string[6];
+        private string CfgDIR = Directory.GetCurrentDirectory().Substring(0, Directory.GetCurrentDirectory().Length - 23) + "connect.cfg";
+        string CONcfg;
+
+        public object[] CapitalObj = new Country[1];
+        public object[] RegionObj = new Country[1];
+        public object[] CountryObj = new Country[1];
+
         public MainWindow()
         {
             InitializeComponent();
+            string[] CfgStrings = File.ReadAllLines(CfgDIR);
+            foreach (string str in CfgStrings)
+            {
+                CONcfg += str;
+            }
         }
         //----Drag Move----
         private void Win_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -105,13 +119,20 @@ namespace CountryChecker__CRMguru_TEST_
                 SC_Button.IsEnabled = false;
             }
             if ((string)StatusL.Content == "Data Obtained") StatusL.Foreground = Brushes.LightGreen;
-            else if((string)StatusL.Content != "Data saved") StatusL.Foreground = Brushes.DarkRed;
+            else if ((string)StatusL.Content != "Data saved") StatusL.Foreground = Brushes.DarkRed;
         }
 
         //----SQL Controls----
         private void SC_Button_Click(object sender, RoutedEventArgs e)
         {
-            SQLTasks.Connetion();
+            SQLTasks.Connetion(CONcfg);
+
+            CountryObj[x] = new Country(NameL.Content.ToString(), RegionL.Content.ToString(), CapitalL.Content.ToString(), CodeL.Content.ToString(), AreaL.Content.ToString(), PopulationL.Content.ToString());
+            CapitalObj[y] = new Capital(CapitalL.Content.ToString());
+            RegionObj[z] = new Region(RegionL.Content.ToString());
+            x++;
+            y++;
+            z++;
 
             SQLTasks.Insert(NameL.Content.ToString(), RegionL.Content.ToString(), CapitalL.Content.ToString(), CodeL.Content.ToString(), AreaL.Content.ToString(), PopulationL.Content.ToString());
             StatusL.Content = "Data saved";
@@ -122,7 +143,7 @@ namespace CountryChecker__CRMguru_TEST_
 
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
         {
-            SQLTasks.Connetion();
+            SQLTasks.Connetion(CONcfg.ToString());
 
             DT = SQLTasks.SelectAll();
             MDataGrid.ItemsSource = null;
