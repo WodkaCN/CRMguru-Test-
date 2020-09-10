@@ -6,38 +6,37 @@ namespace CountryChecker__CRMguru_TEST_
 {
     class Country
     {
-        private int n = 0;
+        private string _name, _region, _capital, _code, _area, _population;
         public string Name
         {
-            get { return Name; }
-            private set { Name = value; }
+            get { return _name; }
+            private set { _name = value; }
         }
         public string Region
         {
-            get { return Region; }
-            private set { Region = value; }
+            get { return _region; }
+            private set { _region = value; }
         }
         public string Capital
         {
-            get { return Capital; }
-            private set { Capital = value; }
+            get { return _capital; }
+            private set { _capital = value; }
         }
         public string Code
         {
-            get { return Code; }
-            private set { Code = value; }
+            get { return _code; }
+            private set { _code = value; }
         }
         public string Area
         {
-            get { return Area; }
-            private set { Area = value; }
+            get { return _area; }
+            private set { _area = value; }
         }
         public string Population
         {
-            get { return Population; }
-            private set { Population = value; }
+            get { return _population; }
+            private set { _population = value; }
         }
-
         public Country(string pr1, string pr2, string pr3, string pr4, string pr5, string pr6)
         {
             Name = pr1;

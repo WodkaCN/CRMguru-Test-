@@ -6,11 +6,12 @@ namespace CountryChecker__CRMguru_TEST_
 {
     class Region
     {
+        private string _region;
         public int ID = 0;
         public string RegionN
         {
-            get { return RegionN; }
-            private set { RegionN = value; }
+            get { return _region; }
+            private set { _region = value; }
         }
         public Region(string pr1)
         {

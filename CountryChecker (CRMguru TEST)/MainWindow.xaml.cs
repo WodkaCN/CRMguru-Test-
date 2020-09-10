@@ -127,12 +127,41 @@ namespace CountryChecker__CRMguru_TEST_
         {
             SQLTasks.Connetion(CONcfg);
 
-            CountryObj[x] = new Country(NameL.Content.ToString(), RegionL.Content.ToString(), CapitalL.Content.ToString(), CodeL.Content.ToString(), AreaL.Content.ToString(), PopulationL.Content.ToString());
-            CapitalObj[y] = new Capital(CapitalL.Content.ToString());
-            RegionObj[z] = new Region(RegionL.Content.ToString());
-            x++;
-            y++;
-            z++;
+            try //----Country----
+            {
+                CountryObj[x] = new Country(NameL.Content.ToString(), RegionL.Content.ToString(), CapitalL.Content.ToString(), CodeL.Content.ToString(), AreaL.Content.ToString(), PopulationL.Content.ToString());
+                x++;
+            }
+            catch 
+            {
+                Array.Resize(ref CountryObj, CountryObj.Length + 1);
+                CountryObj[x] = new Country(NameL.Content.ToString(), RegionL.Content.ToString(), CapitalL.Content.ToString(), CodeL.Content.ToString(), AreaL.Content.ToString(), PopulationL.Content.ToString());
+                x++;
+            }
+
+            try //----Capital----
+            {
+                CapitalObj[y] = new Capital(CapitalL.Content.ToString());
+                y++;
+            }
+            catch
+            {
+                Array.Resize(ref CapitalObj, CapitalObj.Length + 1);
+                CapitalObj[y] = new Capital(CapitalL.Content.ToString());
+                y++;
+            }
+
+            try //----Region----
+            {
+                RegionObj[z] = new Region(RegionL.Content.ToString());
+                z++;
+            }
+            catch
+            {
+                Array.Resize(ref RegionObj, RegionObj.Length + 1);
+                RegionObj[z] = new Region(RegionL.Content.ToString());
+                z++;
+            }
 
             SQLTasks.Insert(NameL.Content.ToString(), RegionL.Content.ToString(), CapitalL.Content.ToString(), CodeL.Content.ToString(), AreaL.Content.ToString(), PopulationL.Content.ToString());
             StatusL.Content = "Data saved";
